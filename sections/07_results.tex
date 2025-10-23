@@ -61,22 +61,25 @@ Table \ref{tab:pareto_solutions} presents four representative solutions from the
 
 \begin{table}[h]
 \centering
-\caption{Representative Pareto-Optimal Solutions}
+\caption{Representative Pareto-Optimal Solutions (Avenida Paulista, 99 Rooftop Sites)}
 \label{tab:pareto_solutions}
 \begin{tabular}{lccccp{3.5cm}}
 \toprule
 \textbf{Solution} & \textbf{Sensors} & $\mc$ & \textbf{Red.} & \textbf{Cost} & \textbf{Use Case} \\
  & & \textbf{(\%)} & & \textbf{(UoM)} & \\
 \midrule
-B (Balanced) & 3 RF & 85.6 & 2.71 & 3 & Operational UTM \\
-C (High Cov.) & 1R+2RF+1EO & 85.6 & 3.66 & 9 & Safety-critical \\
+A (Min Cost) & 22 (10A+5RF+6EO+1R) & 93.3 & 5.87 & 42 & Budget-constrained \\
+B (Balanced) & 30 (12A+6RF+7EO+7R) & 94.3 & 12.8 & 69 & Operational UTM \\
+C (High Red.) & 56 (10A+16RF+13EO+17R) & 94.3 & 21.9 & 147 & Safety-critical \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\textbf{Solution B} achieves maximum coverage (85.6\%) with minimal cost (3 UoM) using homogeneous RF sensors—representing an operational baseline for routine UTM monitoring.
+\textbf{Solution A} achieves 93.3\% coverage with minimal cost (42 UoM, 22 sensors)—predominantly acoustic sensors for cost-effective baseline surveillance suitable for low-risk delivery operations.
 
-\textbf{Solution C} employs heterogeneous sensors (Radar, RF, EO) for 35\% higher redundancy (3.66 vs 2.71) at 3x cost—appropriate for safety-critical UAM corridors over populated areas where sensor failure cannot compromise coverage.
+\textbf{Solution B} represents a balanced configuration (30 sensors, 69 UoM) achieving 94.3\% coverage with 12.8 average redundancy—appropriate for operational UTM corridors where reliability and cost must be balanced.
+
+\textbf{Solution C} employs 56 heterogeneous sensors for maximum redundancy (21.9) at 3.5x cost—critical for passenger UAM operations where no single sensor failure can compromise coverage over densely populated Avenida Paulista.
 
 \subsubsection{Coverage Maps: Spatial Distribution}
 
@@ -108,32 +111,33 @@ The coverage maps demonstrate that:
 
 \subsubsection{Key Observations from Pareto Analysis}
 
-The Pareto front reveals fundamental insights for GBSS deployment:
+The Pareto front reveals fundamental insights for GBSS deployment in real-world urban scenarios:
 
 \begin{itemize}
-\item \textbf{Coverage Saturation}: All non-trivial solutions achieve 85.6\% coverage, indicating geometric constraint (5 sensor locations limit achievable coverage). Additional sensors improve redundancy but not coverage—highlighting the importance of strategic location selection.
+\item \textbf{Coverage Saturation}: All solutions achieve 93.3-94.3\% coverage, indicating that 99 rooftop locations (mean height 82m) provide excellent city-scale surveillance capability. The marginal 1\% coverage gain from 22 to 56 sensors demonstrates diminishing returns—strategic location selection (building-centric) is more impactful than sensor quantity.
 
-\item \textbf{Cost-Redundancy Trade-off}: Increasing redundancy from 2.71 to 3.66 (+35\%) requires tripling cost (3 to 9 UoM). This diminishing return informs tiered deployment strategies where initial networks achieve operational capability at moderate cost, with expansion driven by safety requirements.
+\item \textbf{Cost-Redundancy Trade-off}: Increasing redundancy from 5.87 to 21.9 (+273\%) requires scaling cost from 42 to 147 UoM (+250\%). This near-linear relationship (without diminishing returns up to 56 sensors) suggests that redundancy-critical applications can achieve desired safety levels through proportional investment, unlike coverage which saturates quickly.
 
-\item \textbf{Heterogeneity Premium}: Heterogeneous configurations (Solution C) provide higher redundancy than homogeneous ones (Solution B) at identical coverage, confirming the value of sensor diversity for resilience—critical when different failure modes (weather, interference) affect sensor types differently.
+\item \textbf{Heterogeneity Premium}: All Pareto solutions employ heterogeneous sensor mixes—no homogeneous configuration appears in the optimal set. This confirms that sensor diversity (Acoustic, Radar, RF, EO) provides Pareto-superior resilience against varied failure modes (weather, interference, occlusion) compared to single-type deployments.
 
-\item \textbf{No Universal Optimum}: The absence of a dominating solution underscores that infrastructure requirements must match operational context. Low-risk operations (daytime delivery over industrial zones) may justify Solution B, while passenger UAM mandates Solution C despite higher expense.
+\item \textbf{No Universal Optimum}: The 15-solution Pareto front spans factor-of-3.5 cost range (42-147 UoM) for equivalent coverage (~94\%), demonstrating that infrastructure requirements must match operational context. Budget-constrained delivery operations justify Solution A, while passenger UAM over dense urban areas mandates Solution C despite higher expense.
 \end{itemize}
 
 \subsection{Real-World Scenario: Avenida Paulista}
 
-The framework processed São Paulo's Avenida Paulista (4,921 buildings, 2.94 km²)—representing the largest urban C-UAS placement study in literature. While detailed optimization is ongoing, the framework successfully:
+The framework successfully processed and optimized São Paulo's Avenida Paulista (4,921 buildings, 2.94 km²)—representing the largest urban GBSS placement study in literature:
 
 \begin{itemize}
-\item Loaded and voxelized 4,921 building geometries (vs. <100 in prior studies)
-\item Identified 88 candidate sensor locations from rooftop/tower sites
-\item Completed single-configuration evaluation in 45 seconds
-\item Demonstrated GA scalability: estimated 2.5 minutes for full optimization
+\item Loaded and voxelized 4,921 building geometries from OpenStreetMap
+\item Identified 99 strategic rooftop locations (heights 47-106m, mean 82m)
+\item Achieved 94.3\% coverage with building-centric sensor placement
+\item Generated Pareto front with 15 non-dominated solutions (coverage: 93.3-94.3\%, redundancy: 5.87-21.9)
+\item Execution time: 2.1 hours (Population=15, Generations=20) using parallelized NSGA-II
 \end{itemize}
 
-This validates global applicability via OpenStreetMap integration—any city worldwide can be analyzed using the same workflow, removing geographic barriers to GBSS planning.
+The building-centric approach yielded superior results compared to arbitrary grid placement—rooftop sensors at mean height 82m (vs. 30m grid) provide enhanced line-of-sight and operational viability (power, network, maintenance access). This validates global applicability via OpenStreetMap integration—any city worldwide can be analyzed using identical workflow, removing geographic barriers to GBSS planning.
 
 \subsection{Summary}
 
-This section demonstrated three key results: (1) GA enables $10^6$x computational speedup making real-world optimization feasible, (2) upper bound validation confirms problem feasibility, and (3) Pareto front analysis reveals that \textit{no single optimal configuration exists}—infrastructure must be tailored to operational risk profiles. The framework's processing of 4,921 buildings (Avenida Paulista) represents the largest urban C-UAS study in literature, validating global applicability through OpenStreetMap integration.
+This section demonstrated three key results: (1) Parallelized NSGA-II enables real-world city-scale optimization (99 rooftop locations, 2.1 hours), (2) Building-centric sensor placement achieves 94.3\% coverage for Avenida Paulista with mean sensor heights of 82m, and (3) Pareto front analysis reveals 15 non-dominated solutions spanning coverage 93.3-94.3\%, redundancy 5.87-21.9, and cost 42-147 UoM—demonstrating that \textit{no single optimal configuration exists}. Infrastructure must be tailored to operational risk profiles: budget-constrained delivery operations may deploy Solution A (22 sensors), while passenger UAM requires Solution C (56 sensors) despite 3.5x cost. The framework's processing of 4,921 buildings represents the largest urban GBSS study in literature, validating global applicability through OpenStreetMap integration.
 
