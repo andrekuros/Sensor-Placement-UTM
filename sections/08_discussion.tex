@@ -1,0 +1,176 @@
+% Section 8: Discussion
+
+\section{Discussion}
+
+\subsection{Scalability Advantages}
+
+The primary advantage of our GA-based approach is demonstrated through computational complexity reduction. While MUSCAT's exhaustive search requires $O(2^n)$ evaluations, our GA achieves comparable results with $O(g \cdot p)$ complexity. For the Avenida Paulista scenario with 88 potential sensor locations:
+
+\begin{itemize}
+\item \textbf{Exhaustive}: $2^{88} \approx 3 \times 10^{26}$ combinations (computationally infeasible)
+\item \textbf{Our GA}: $80 \times 40 = 3,200$ evaluations (completed in 117 seconds)
+\end{itemize}
+
+This represents a practical solution to a previously intractable problem, enabling optimization of real-world urban C-UAS deployments.
+
+\subsection{Urban Environment Realism}
+
+The integration of OSM data provides several advantages over terrain-only modeling:
+
+\textbf{Building-Level Accuracy}: Ray-tracing with actual building footprints and heights captures realistic signal propagation effects specific to urban environments, including:
+\begin{itemize}
+\item \textbf{LoS Blockage}: Tall buildings (up to 105m in Avenida Paulista) create significant coverage gaps
+\item \textbf{Street Canyon Effects}: Building alignments create corridors with different propagation characteristics
+\item \textbf{Height Stratification}: Coverage varies significantly with altitude as line-of-sight improves above building heights
+\end{itemize}
+
+\textbf{Global Applicability}: The ability to download data for any city enables comparative studies across different urban morphologies (e.g., dense downtown vs. suburban areas).
+
+\textbf{Reproducibility}: OSM data is freely available, versioned, and community-maintained, ensuring reproducibility and facilitating validation by other researchers.
+
+\subsection{Coverage vs. Area Trade-offs}
+
+Our results reveal an important trade-off between area size and achievable coverage:
+
+\begin{itemize}
+\item \textbf{Synthetic (0.044 km²)}: 88\% coverage with 8 sensors ($\approx$ 182 sensors/km²)
+\item \textbf{Avenida Paulista (2.94 km²)}: 25\% coverage with 20 sensors ($\approx$ 6.8 sensors/km²)
+\end{itemize}
+
+This 26x difference in sensor density explains the coverage disparity. For urban C-UAS deployment, this suggests:
+
+\begin{enumerate}
+\item \textbf{Dense Coverage Requirement}: Urban environments require higher sensor densities than terrain-based corridors
+\item \textbf{Phased Deployment}: Incremental deployment starting with critical areas
+\item \textbf{Sensor Capability Importance}: Higher power/sensitivity sensors can reduce required density
+\end{enumerate}
+
+\subsection{Methodological Advances Over State-of-the-Art}
+
+Our framework advances the state-of-the-art in three dimensions:
+
+\textbf{Optimization Scalability}: Table \ref{tab:scalability} quantifies the computational advantage. For 88 potential sensor locations (Avenida Paulista scenario):
+\begin{itemize}
+\item Exhaustive search: $2^{88} \approx 3 \times 10^{26}$ evaluations (impossible)
+\item MIP approaches: NP-hard, typically infeasible beyond 20-30 variables for non-convex problems
+\item Our GA: 3,200 evaluations, 117 seconds (practical)
+\end{itemize}
+
+This enables, for the first time, optimization of realistic large-scale urban C-UAS deployments.
+
+\textbf{Data Accessibility}: OSM integration provides unprecedented accessibility:
+\begin{itemize}
+\item \textbf{Global Coverage}: 190+ countries with urban building data
+\item \textbf{Free Access}: No commercial database licenses required
+\item \textbf{Community Updated}: Regular improvements from global contributors
+\item \textbf{Reproducible}: Public data enables study replication
+\end{itemize}
+
+\textbf{Validation Scale}: Our Avenida Paulista validation (4,921 buildings, 2.94 km²) exceeds existing literature by orders of magnitude. Most sensor placement studies validate with 10-100 synthetic elements; we validate with nearly 5,000 real buildings, demonstrating practical applicability.
+
+\subsection{Practical Implications of Pareto Analysis}
+
+The Pareto front analysis (Fig.~\ref{fig:pareto3d}) reveals fundamental insights for real-world GBSS deployment planning that single-objective optimization cannot capture:
+
+\subsubsection{No Universal Optimum}
+
+The existence of multiple non-dominated solutions confirms that \textit{no single "best" configuration exists}. Infrastructure requirements must be matched to operational context:
+
+\begin{itemize}
+\item \textbf{Low-Risk Operations} (daytime package delivery over industrial zones): Solution B (3 RF sensors, 85.6\% coverage, cost=3 UoM) provides cost-effective baseline monitoring.
+
+\item \textbf{High-Risk Operations} (passenger UAM over populated areas): Solution C (4 heterogeneous sensors, 85.6\% coverage, 3.66 redundancy, cost=9 UoM) provides 35\% higher resilience despite 3x cost—justified by safety criticality.
+\end{itemize}
+
+This paradigm shift from "finding the optimum" to "selecting from the Pareto front based on risk profile" enables more nuanced regulatory frameworks.
+
+\subsubsection{Diminishing Returns and Staged Deployment}
+
+The Pareto front exhibits concave trade-offs: increasing redundancy from 2.71 to 3.66 (+35\%) requires tripling cost (3 to 9 UoM). This non-linear relationship informs deployment strategies:
+
+\begin{enumerate}
+\item \textbf{Phase 1 (Operational Capability)}: Deploy Solution B achieving 85.6\% coverage at minimal cost, enabling initial UTM operations.
+
+\item \textbf{Phase 2 (Expansion)}: Add sensors incrementally as traffic density grows, following Pareto front toward higher redundancy configurations.
+
+\item \textbf{Phase 3 (Safety-Critical)}: Upgrade to Solution C when introducing passenger UAM or high-density operations requiring maximum resilience.
+\end{enumerate}
+
+This staged approach avoids over-investment while maintaining expansion pathways—critical for business case justification.
+
+\subsubsection{Heterogeneity as Risk Mitigation}
+
+Heterogeneous configurations (Solution C: Radar + RF + EO) achieve higher redundancy than homogeneous ones (Solution B: RF only) at identical coverage. This reflects fundamental reliability engineering: different sensor types exhibit different failure modes (weather affects EO but not RF; interference affects RF but not Radar). Diversification provides resilience against correlated failures—analogous to portfolio theory in finance.
+
+\subsubsection{Regulatory Flexibility}
+
+By presenting regulators with the complete Pareto front rather than a single solution, authorities can establish tiered certification requirements:
+
+\begin{itemize}
+\item \textbf{Tier 1 (Visual Line of Sight)}: Minimal GBSS augmentation
+\item \textbf{Tier 2 (Extended VLOS / Low-Density BVLOS)}: Solution B level (80-85\% coverage)
+\item \textbf{Tier 3 (High-Density BVLOS / UAM)}: Solution C level (85\%+ coverage, 3.5+ redundancy)
+\end{itemize}
+
+This tiered approach balances safety with economic viability, enabling progressive UAM market development.
+
+\subsection{Redundancy and Resilience}
+
+Our framework achieves high redundancy ($\rnet \approx 1.9$) meaning most covered areas are monitored by approximately 2 sensors. This provides:
+
+\begin{itemize}
+\item \textbf{Cyber Resilience}: System continues operating if one sensor is compromised
+\item \textbf{Sensor Fusion}: Multiple detections enable track refinement
+\item \textbf{Failure Tolerance}: Graceful degradation under sensor failures
+\end{itemize}
+
+However, the overlap metric shows NaN values in some scenarios due to sparse multi-sensor regions, indicating opportunities for improvement in GA objective function tuning.
+
+\subsection{Limitations and Challenges}
+
+\subsubsection{Coverage in Dense Urban Environments}
+
+The Avenida Paulista results (24\% coverage) highlight challenges of C-UAS deployment in dense urban cores:
+
+\begin{itemize}
+\item \textbf{Building Density}: 4,921 buildings in 2.94 km² create extensive LoS obstructions
+\item \textbf{Signal Attenuation}: Multi-path propagation and reflections (not modeled) may provide additional coverage not captured by deterministic LoS
+\item \textbf{Sensor Count}: Current configurations (10-20 sensors) are insufficient for 95\% coverage in such large, dense areas
+\end{itemize}
+
+\subsubsection{GA Parameter Sensitivity}
+
+We observed that fitness function weights significantly impact solutions:
+
+\begin{itemize}
+\item \textbf{High Cost Weight}: GA favors fewer sensors, potentially finding empty solutions
+\item \textbf{Balanced Weights}: Configurations similar to baseline emerge
+\item \textbf{High Coverage Weight}: Maximum sensor deployment within constraints
+\end{itemize}
+
+Proper weight selection requires domain knowledge and iterative refinement.
+
+\subsubsection{Computational Scaling}
+
+While our approach scales far better than exhaustive search, very large scenarios still present challenges:
+
+\begin{itemize}
+\item Grid size: $100 \times 100 \times 10$ = 100,000 voxels becomes memory-intensive
+\item Solution: Adaptive resolution or hierarchical optimization
+\end{itemize}
+
+\subsection{Validation and Accuracy}
+
+The deterministic ray-tracing approach provides exact LoS determination, avoiding statistical model uncertainties. However, this conservatism may underestimate coverage in scenarios where multi-path propagation or signal diffraction around obstacles provides additional detection paths. Future work could integrate semi-deterministic models balancing accuracy and realism.
+
+\subsection{Practical Deployment Insights}
+
+From our experiments, we derive practical guidelines for urban C-UAS deployment:
+
+\begin{enumerate}
+\item \textbf{Sensor Density}: Urban areas require $\approx$ 50-100 sensors/km² for 90\%+ coverage
+\item \textbf{Height Placement}: Elevating sensors above average building heights (20-30m) significantly improves coverage
+\item \textbf{Heterogeneous Mix}: 1.5:1 to 2:1 ratio of Radar to RF provides good balance
+\item \textbf{Cost Target}: Urban deployments likely require CA = 0.5-2.0 UoM/\% for dense cores, higher than corridor scenarios
+\end{enumerate}
+

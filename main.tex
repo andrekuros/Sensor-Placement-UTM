@@ -1,0 +1,71 @@
+% MUSCAT Framework Paper - IEEE/AIAA DASC Format
+% Enhanced Multi-Sensor Optimization for C-UAS using Genetic Algorithms
+
+\documentclass[conference]{IEEEtran}
+
+% Packages
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{url}
+\usepackage{hyperref}
+
+% Custom commands
+\newcommand{\mc}{M_c}
+\newcommand{\mg}{M_g}
+\newcommand{\pnet}{\bar{P}_{Net}}
+\newcommand{\rnet}{\bar{R}}
+
+\begin{document}
+
+% Title
+\title{Scalable Multi-Objective Optimization for Urban BVLOS Surveillance Infrastructure Planning}
+
+% Authors
+\author{
+\IEEEauthorblockN{Your Name\IEEEauthorrefmark{1}, Co-Author Name\IEEEauthorrefmark{2}}
+\IEEEauthorblockA{\IEEEauthorrefmark{1}Your Institution, Department\\
+City, Country\\
+Email: your.email@institution.edu}
+\IEEEauthorblockA{\IEEEauthorrefmark{2}Co-Author Institution\\
+Email: coauthor@institution.edu}
+}
+
+\maketitle
+
+% Abstract
+\begin{abstract}
+The safe integration of Beyond Visual Line of Sight (BVLOS) operations and Urban Air Mobility (UAM) into dense urban airspace requires robust Ground-Based Surveillance Systems (GBSS), yet no existing framework addresses the simultaneous challenges of high-fidelity urban modeling, multi-objective optimization, and real-world validation at city scale. This paper presents a holistic methodology that integrates four key components: (1) OpenStreetMap for automatic acquisition of building geometries from any city worldwide, (2) deterministic 3D ray-tracing for accurate line-of-sight calculations with urban obstacles, (3) multi-objective optimization via NSGA-II to discover Pareto-optimal trade-offs between coverage, redundancy, and cost, and (4) scalable Genetic Algorithms enabling optimization of networks with 50-100 sensor locations—previously intractable. The framework optimizes heterogeneous sensor networks (Radar, RF, Electro-Optical, Acoustic) discovering a continuum of non-dominated solutions rather than prescribing a single configuration, enabling infrastructure selection based on operational context and risk profiles. Real-world validation with São Paulo's Avenida Paulista (4,921 buildings over 2.94 km²) represents the largest urban C-UAS placement study in literature—50x larger than prior work—demonstrating global applicability and providing the first computationally viable tool for prescriptive UTM infrastructure planning at city scale. Results maintain full compatibility with MUSCAT metrics, facilitating regulatory adoption.
+\end{abstract}
+
+% Keywords
+\begin{IEEEkeywords}
+Beyond Visual Line of Sight (BVLOS), Urban Air Mobility (UAM), Ground-Based Surveillance Systems (GBSS), Detect-and-Avoid (DAA), UTM infrastructure, Multi-sensor optimization, Genetic algorithms, OpenStreetMap, Urban environment modeling
+\end{IEEEkeywords}
+
+% Sections
+\input{sections/01_introduction}
+\input{sections/02_related_work}
+\input{sections/03_problem_formulation}
+\input{sections/04_methodology}
+\input{sections/05_implementation}
+\input{sections/06_experimental_setup}
+\input{sections/07_results}
+\input{sections/08_discussion}
+\input{sections/09_conclusion}
+
+% Acknowledgments
+\section*{Acknowledgments}
+This work was supported by [Funding Agency]. The authors thank [People/Organizations].
+
+% References
+\bibliographystyle{IEEEtran}
+\bibliography{references/references}
+
+\end{document}
+

@@ -1,0 +1,126 @@
+% Section 6: Experimental Setup
+
+\section{Experimental Setup}
+
+\subsection{Scenarios}
+
+We evaluate the framework using two complementary scenarios:
+
+\subsubsection{Scenario 1: Synthetic Urban Environment}
+
+\textbf{Purpose}: Controlled validation and baseline comparison
+
+\begin{itemize}
+\item \textbf{Buildings}: 3 synthetic buildings (heights: 20-40m)
+\item \textbf{Area}: 250m $\times$ 175m (0.044 km²)
+\item \textbf{Voxel Resolution}: 10m
+\item \textbf{Grid Size}: $25 \times 18 \times 6$ (2,700 voxels)
+\item \textbf{Sensor Locations}: 5 pre-defined positions
+\item \textbf{Occupancy}: 12\% (325 occupied voxels)
+\end{itemize}
+
+\subsubsection{Scenario 2: Avenida Paulista, São Paulo}
+
+\textbf{Purpose}: Real-world validation with complex urban environment
+
+\begin{itemize}
+\item \textbf{Data Source}: OpenStreetMap (downloaded 2025-10-22)
+\item \textbf{Buildings}: 4,921 real buildings
+\item \textbf{Area}: 1.72km $\times$ 1.71km (2.94 km²)
+\item \textbf{Voxel Resolution}: 20m (optimized for large area)
+\item \textbf{Grid Size}: $86 \times 86 \times 6$ (44,376 voxels)
+\item \textbf{Sensor Locations}: 88 potential positions
+\item \textbf{Building Heights}: Mean 20.4m, max 105.8m
+\item \textbf{Occupancy}: 5.7\% (2,528 occupied voxels)
+\end{itemize}
+
+This represents a 67x increase in area and 410x increase in building count compared to the synthetic scenario, testing framework scalability with realistic urban complexity.
+
+\subsection{Sensor Configurations}
+
+\subsubsection{Baseline Configurations}
+
+Following MUSCAT Table III \cite{muscat2023}, we evaluate:
+
+\begin{itemize}
+\item \textbf{Config 1}: 4 Radars + 4 RF (Cost: 24 UoM)
+\item \textbf{Config 2}: 5 Radars + 3 RF (Cost: 28 UoM)
+\item \textbf{Config 3}: 6 Radars + 2 RF (Cost: 32 UoM)
+\end{itemize}
+
+where Radar cost = 5 UoM and RF/RID cost = 1 UoM.
+
+\subsubsection{Sensor Physical Parameters}
+
+Table \ref{tab:sensor_params} presents the sensor parameters used, aligned with MUSCAT specifications where applicable.
+
+\begin{table}[h]
+\centering
+\caption{Sensor Physical Parameters}
+\label{tab:sensor_params}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Parameter} & \textbf{Radar} & \textbf{RF/RID} & \textbf{Unit} \\
+\midrule
+Frequency & 18 & 2.4 & GHz \\
+Tx Power / ERP & 5,000 & 1 & W \\
+Antenna Gain & 40 & 10 & dBi \\
+Sensitivity & - & -95 & dBm \\
+Detection Threshold & 0.8 & - & - \\
+Range (approx.) & 500-800 & 400-600 & m \\
+Cost (relative) & 5.0 & 1.0 & UoM \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Genetic Algorithm Configuration}
+
+\begin{table}[h]
+\centering
+\caption{GA Parameters}
+\label{tab:ga_params}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Parameter} & \textbf{Synthetic} & \textbf{Real} \\
+\midrule
+Population Size & 30 & 40 \\
+Generations & 50 & 80 \\
+Crossover Probability & 0.7 & 0.7 \\
+Mutation Probability & 0.2 & 0.2 \\
+Max Sensors & 10 & 30 \\
+Weight $w_1$ (Coverage) & 10.0 & 10.0 \\
+Weight $w_2$ (Redundancy) & 5.0 & 5.0 \\
+Weight $w_3$ (Cost) & 0.001 & 0.001 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Computational Environment}
+
+Experiments were conducted on:
+\begin{itemize}
+\item \textbf{CPU}: AMD/Intel with 16 cores (parallelization)
+\item \textbf{RAM}: 16 GB
+\item \textbf{OS}: Linux (Ubuntu-based)
+\item \textbf{Python}: 3.10+
+\end{itemize}
+
+\subsection{Performance Metrics}
+
+For each configuration, we measure:
+
+\begin{enumerate}
+\item \textbf{MUSCAT Metrics}: $\mc$, $\mg$, $CA$, Overlap
+\item \textbf{Computational}: Evaluation time, convergence generations
+\item \textbf{Network}: Average $\pnet$, average $\rnet$, total cost
+\item \textbf{Requirements}: Pass/fail for $\mc > 0.95$ and Overlap $> 0.55$
+\end{enumerate}
+
+Results are classified using a stoplight system:
+\begin{itemize}
+\item \textcolor{green}{\textbf{GREEN}}: Meets both requirements
+\item \textcolor{orange}{\textbf{YELLOW}}: Meets one requirement
+\item \textcolor{red}{\textbf{RED}}: Meets neither requirement
+\end{itemize}
+
+

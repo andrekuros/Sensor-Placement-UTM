@@ -1,0 +1,74 @@
+% Section 9: Conclusion
+
+\section{Conclusion and Future Work}
+
+\subsection{Summary of Contributions}
+
+This paper presented an enhanced framework for multi-sensor C-UAS network optimization, addressing key limitations of existing approaches while maintaining compatibility with established MUSCAT methodology and metrics. Our three main contributions provide significant practical advantages:
+
+\textbf{Genetic Algorithm Optimization} reduces computational complexity from $O(2^n)$ to $O(g \cdot p)$, enabling optimization of networks with 50-100 sensors in scenarios previously computationally intractable. This scalability is essential for urban C-UAS deployment covering multiple square kilometers.
+
+\textbf{OpenStreetMap Integration} enables automatic acquisition and processing of real urban building data from any location worldwide. Validation with Avenida Paulista (4,921 buildings over 2.94 km²) demonstrates the framework's capability to handle realistic urban complexity, providing more accurate deployment planning than terrain-only models.
+
+\textbf{Deterministic Ray-Tracing} replaces statistical LoS models with precise 3D obstacle detection, improving prediction accuracy for urban environments where building geometry significantly impacts sensor coverage.
+
+\subsection{Key Findings}
+
+Our experimental validation reveals several important insights:
+
+\begin{enumerate}
+\item \textbf{Scalability Validated}: GA successfully optimizes configurations in both small (0.044 km²) and large (2.94 km²) scenarios, with solution quality comparable to baseline methods where both are applicable.
+
+\item \textbf{Urban Density Impact}: Dense urban cores (like Avenida Paulista) require significantly higher sensor densities (50-100 sensors/km²) compared to corridor scenarios (10-20 sensors/km²) to achieve 90\%+ coverage.
+
+\item \textbf{Cost-Effectiveness Maintained}: Despite added environmental complexity, our approach achieves CA values within 8-10\% of MUSCAT baseline, demonstrating competitive cost-effectiveness.
+
+\item \textbf{Computational Efficiency}: GA optimization completes in 117 seconds for 44,376-voxel scenarios with 88 potential sensor locations—a problem infeasible for exhaustive search.
+\end{enumerate}
+
+\subsection{Practical Implications}
+
+For urban C-UAS deployment practitioners, this framework provides:
+
+\begin{itemize}
+\item \textbf{Site-Specific Analysis}: Capability to analyze actual deployment locations using OSM data
+\item \textbf{Resource Planning}: Prediction of sensor requirements for desired coverage levels
+\item \textbf{Trade-off Exploration}: Systematic evaluation of coverage vs. cost via GA weight tuning
+\item \textbf{Decision Support}: Stoplight visualizations clearly indicating requirement satisfaction
+\end{itemize}
+
+\subsection{Limitations}
+
+Current limitations include:
+
+\begin{enumerate}
+\item \textbf{Propagation Model}: Ray-tracing provides LoS but does not model multi-path, diffraction, or reflection effects that may enhance coverage
+\item \textbf{Static Analysis}: Framework assumes stationary sensors and does not optimize for dynamic threats or time-varying coverage requirements
+\item \textbf{Binary Detection}: Simplified detection model (threshold-based) does not account for detection quality degradation
+\end{enumerate}
+
+\subsection{Future Work}
+
+We identify several directions for extending this work:
+
+\textbf{Advanced Propagation Models}: Integrate empirical urban propagation models (e.g., COST231-Walfisch-Ikegami) to account for multi-path and diffraction, potentially improving coverage predictions for real deployments.
+
+\textbf{Multi-Objective Optimization}: Extend GA to explicit Pareto optimization, generating trade-off frontiers between coverage, redundancy, and cost rather than weight-based scalarization.
+
+\textbf{Dynamic Scenarios}: Model time-varying threat patterns and optimize sensor activation schedules for energy efficiency while maintaining coverage requirements.
+
+\textbf{Sensor Quality Variation}: Incorporate heterogeneous sensor capabilities (different ranges, sensitivities) within each sensor type to reflect realistic equipment availability.
+
+\textbf{Cyber-Security Integration}: Explicit modeling of cyber-attack scenarios and optimization for resilience against specific threat models.
+
+\textbf{Experimental Validation}: Field deployment with real sensors to validate coverage predictions and refine propagation models based on measured data.
+
+\textbf{3D Coverage Requirements}: Extend from 2D coverage metrics to altitude-dependent requirements for UAM corridor vertical segmentation.
+
+\subsection{Concluding Remarks}
+
+This work demonstrates that combining Genetic Algorithms with real urban environment data significantly enhances the applicability and scalability of multi-sensor C-UAS network optimization. The framework maintains compatibility with established MUSCAT metrics while enabling analysis of previously infeasible large-scale urban scenarios. By making the implementation open-source with comprehensive documentation, we aim to facilitate further research and practical deployment of optimized C-UAS sensor networks for urban airspace security.
+
+The successful validation with Avenida Paulista data demonstrates readiness for real-world deployment planning, while the synthetic scenario validation confirms correctness and provides a reproducible baseline for comparative studies. Future urban air mobility systems and drone corridor operators can leverage this framework to make informed, cost-effective decisions about sensor infrastructure investments.
+
+

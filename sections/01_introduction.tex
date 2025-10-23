@@ -1,0 +1,46 @@
+% Section 1: Introduction
+
+\section{Introduction}
+
+\subsection{Enabling Safe BVLOS and UAM Operations}
+
+The rapid growth of Beyond Visual Line of Sight (BVLOS) drone operations and Urban Air Mobility (UAM) promises transformative economic benefits, from autonomous package delivery to air taxis \cite{faa2023uam}. However, safe integration into dense urban airspace requires addressing a critical infrastructure gap: continuous, reliable surveillance coverage to enable Detect-and-Avoid (DAA) capabilities for all aircraft, both manned and unmanned \cite{mueller2017enabling}.
+
+Unlike traditional Air Traffic Control (ATC) systems that rely on cooperative transponders, future UTM (UAS Traffic Management) architectures must detect \textit{all} airspace users—including non-cooperative or malfunctioning drones—to prevent collisions and ensure public safety \cite{faa2020utm}. This surveillance requirement directly impacts airspace capacity: regulators mandate larger separation "bubbles" (e.g., 500m radius) when surveillance is uncertain, drastically reducing the number of concurrent operations possible in a urban corridor \cite{nasa2021utm}. Conversely, high-confidence surveillance enables tighter separations (e.g., 50m), increasing corridor capacity by orders of magnitude.
+
+\subsection{Ground-Based Surveillance Systems (GBSS)}
+
+Ground-Based Surveillance Systems (GBSS) provide the foundational surveillance layer for UTM, complementing aircraft-based DAA sensors by offering persistent, infrastructure-supported coverage \cite{kopardekar2016unmanned}. However, no single sensor technology can reliably detect all airspace users in urban environments due to inherent physical limitations: radars provide all-weather detection but have short ranges for small RCS targets; RF/RID receivers are cost-effective but depend on cooperative emitters; electro-optical sensors lack range in adverse weather; acoustic sensors suffer from urban noise \cite{guvenc2018detection}.
+
+This technological diversity necessitates \textit{heterogeneous} multi-sensor networks that fuse complementary capabilities to achieve the coverage reliability and redundancy required by UTM. The resulting GBSS also serves dual-purpose security functions (Counter-UAS detection of unauthorized drones), further motivating infrastructure investment. However, designing cost-effective GBSS deployments presents a formidable optimization challenge: determining the optimal number, types, and spatial placement of sensors to maximize coverage and resilience across square-kilometer urban areas while satisfying budget constraints and physical deployment constraints (building rooftops, towers, etc.).
+
+\subsection{Prior Work and Remaining Challenges}
+
+Kukulka de Albuquerque et al. \cite{muscat2023} addressed this challenge with MUSCAT (Mason's UAV Systems and Cyber Analysis Testbed), a framework combining JDL Data Fusion principles with systems engineering for sensor placement optimization. Their methodology established rigorous metrics (Coverage Index $\mc$, Gap Index $\mg$, Cost-Effectiveness $CA$) and demonstrated effectiveness for corridor design using terrain elevation models (DTED) and exhaustive enumeration of sensor combinations. However, their exhaustive search approach—while optimal for small scenarios—faces fundamental scalability limits that prevent application to real urban deployments, as detailed below.
+
+\subsection{Research Gaps in Current Approaches}
+
+Despite advances in C-UAS sensor network design, three critical gaps remain unaddressed in the literature:
+
+\textbf{Gap 1 - Scalability}: Most optimization approaches suffer from computational intractability for realistic urban scenarios. Exhaustive search methods \cite{muscat2023} evaluate all combinations resulting in $O(2^n)$ complexity—infeasible beyond 10-15 potential positions. Mixed-Integer Programming formulations \cite{aievola2022ground} face similar NP-hard scaling challenges. For urban C-UAS deployment requiring 50-100 sensors across several square kilometers, these approaches become computationally prohibitive.
+
+\textbf{Gap 2 - Urban Environment Representation}: Existing frameworks primarily employ terrain elevation models (DTED) \cite{muscat2023} or statistical urban propagation models \cite{3gpp38901}. However, C-UAS operations in dense urban cores require explicit modeling of building geometries, as tall structures create significant line-of-sight obstructions. No existing work integrates freely available global urban building databases (OpenStreetMap) for C-UAS sensor placement.
+
+\textbf{Gap 3 - Real-World Validation at Scale}: While several studies propose sensor placement methods, validation typically employs small synthetic scenarios. Large-scale validation with real urban building data (thousands of buildings over multiple square kilometers) is absent from the literature, limiting confidence in practical deployment planning.
+
+\subsection{Contributions}
+
+This paper addresses the identified gaps by presenting the first scalable, globally-applicable framework for GBSS infrastructure design in urban environments, directly enabling UTM and BVLOS operations. Building upon MUSCAT's established methodology and metrics \cite{muscat2023}, we introduce three key methodological advances that overcome computational barriers and provide unprecedented real-world validation. Our main contributions are:
+
+\begin{enumerate}
+\item \textbf{Holistic Framework for City-Scale GBSS Design}: We present the first integrated methodology combining OpenStreetMap urban data acquisition, deterministic 3D ray-tracing with building geometries, multi-objective optimization (NSGA-II), and scalable Genetic Algorithms—enabling prescriptive infrastructure planning for real urban environments. The synergy of these components addresses fundamental barriers: high-fidelity modeling creates non-convex optimization landscapes requiring meta-heuristics, while OSM integration provides global data accessibility. This holistic approach enables what prior methods cannot: city-scale GBSS design for any location worldwide.
+
+\item \textbf{Multi-Objective Pareto Analysis for Infrastructure Trade-offs}: Rather than seeking a single "optimal" configuration, we employ NSGA-II to discover the Pareto-optimal front revealing fundamental trade-offs between coverage, redundancy, and cost. This provides decision-makers and regulators with a continuum of non-dominated solutions, enabling infrastructure selection matched to operational risk profiles (e.g., cost-effective configurations for low-risk delivery vs. high-redundancy for passenger UAM). This represents the first Pareto Front analysis for heterogeneous C-UAS networks, shifting the paradigm from "prescribed solution" to "informed trade-off selection."
+
+\item \textbf{Unprecedented Real-World Validation Scale}: We validate the framework with São Paulo's Avenida Paulista (4,921 buildings, 2.94 km²)—the largest urban C-UAS placement study in literature, exceeding prior work by approximately 50x in building count and area. This demonstrates that the framework scales from synthetic scenarios to complex real cities, proving practical viability for UTM infrastructure planning rather than remaining limited to academic test cases.
+
+\item \textbf{Global Applicability via Open Data}: OpenStreetMap integration enables GBSS design for any city worldwide (190+ countries) using freely available, community-maintained data. This removes geographic and economic barriers to deployment planning, contrasting with approaches requiring proprietary databases or manual surveys. The framework's demonstrated applicability spans synthetic scenarios to dense urban cores, confirming robustness across urban morphologies.
+\end{enumerate}
+
+The remainder of this paper is organized as follows: Section II reviews related work in sensor placement optimization. Section III formulates the multi-sensor optimization problem. Section IV details our enhanced methodology including GA implementation and urban environment modeling. Section V describes the framework implementation. Section VI presents experimental setup and validation scenarios. Section VII analyzes results comparing synthetic and real-world cases. Section VIII discusses implications and limitations. Section IX concludes with future work directions.
+
